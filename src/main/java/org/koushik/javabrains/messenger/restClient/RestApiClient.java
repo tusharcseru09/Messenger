@@ -2,6 +2,7 @@ package org.koushik.javabrains.messenger.restClient;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.MediaType;
@@ -71,11 +72,19 @@ public class RestApiClient {
 				.request(MediaType.APPLICATION_JSON)
 				.get(Message.class);
 		
-		
+/*
 		System.out.println(message1.getMessage());
 		System.out.println(message2.getMessage());
 		
-	
+*/		
+		Message msg = new Message(13,"Posting Post Message.","Tushar");
+		Response postResponse = messageTarget
+		.request()
+		.post(Entity.json(msg));
+		if (postResponse.getStatus()!= 201){
+			System.out.println("Error");
+		}
+		System.out.println(postResponse.readEntity(Message.class).getMessage());
 		
 	}
 }
